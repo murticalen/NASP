@@ -8,17 +8,19 @@ public class AVLNode<T extends Comparable<T>>{
 	public AVLNode<T> rightChild;
 	public AVLNode<T> parent;
 	
-	public AVLNode(T data) {
+	public AVLNode(T data, int height) {
 		this.data = data;
 		this.leftHeight = 0;
 		this.rightHeight = 0;
+		this.h = height;
 		this.countFR();
 	}
-	public AVLNode(T data, AVLNode<T> parent){
+	public AVLNode(T data, AVLNode<T> parent, int height){
 		this.data = data;
 		this.parent = parent;
 		this.leftHeight = 0;
 		this.rightHeight = 0;
+		this.h = height;
 		this.countFR();
 	}
 /*	public AVLNode(T data, int height, AVLNode<T> leftChild, AVLNode<T> rightChild,
@@ -44,7 +46,7 @@ public class AVLNode<T extends Comparable<T>>{
 			level++;
 			System.out.print("======");
 		}
-		System.out.println(" "+data+" L:"+leftHeight+" R:"+rightHeight);
+		System.out.println(" "+data+" L:"+leftHeight+" R:"+rightHeight+" H:"+h);
 		if(rightChild != null){
 			rightChild.recuriveString(maxHeight);
 		}
@@ -102,6 +104,10 @@ public class AVLNode<T extends Comparable<T>>{
 		this.leftChild = parent;
 		this.parent = parent.parent;
 		parent.parent = this;
+	}
+	
+	public int FR(){
+		return rightHeight-leftHeight;
 	}
 	public void countFR(){
 		/*int leftHeight = 0, rightHeight = 0;

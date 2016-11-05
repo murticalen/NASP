@@ -38,79 +38,49 @@ public class AVLTree<T extends Comparable<T>> {
 			return;
 		}
 		if(root == null){
-			root = new AVLNode<T>(data);
+			root = new AVLNode<T>(data, 1);
+			root.h = 1;
 			return;
 		}
-		if(root.data.compareTo(data) <= 0){
-			addData(data, root);
+		AVLNode<T> added;
+		if(root.data.compareTo(data) > 0){
+			added = addData(data, root, root.leftChild, 1);
 		}
 		else{
-			addData(data, root);
+			added = addData(data, root, root.rightChild, 1);
 		}
-		
+		AVLDef(added);
 	}
-	private void addData(T data, AVLNode<T> parent){
-		if(parent.data.compareTo(data) <= 0){
-			if(parent.leftChild == null){
-				parent.leftChild = new AVLNode<T>(data);
+	private AVLNode<T> addData(T data, AVLNode<T> parent, AVLNode<T> next, int height){
+		if(next == null){
+			next = new AVLNode<T>(data, height);
+			if(parent.data.compareTo(data) > 0){
+				parent.leftChild = next;
 			}
 			else{
-				addData(data, parent.leftChild);
+				parent.rightChild = next;
 			}
-			int lh = parent.leftChild != null ? parent.leftChild.h : 0;
-			int rh = parent.rightChild != null ? parent.rightChild.h : 0;
-			parent.leftHeight = Math.max(lh, rh);
-			parent.h = Math.max(parent.leftHeight, parent.rightHeight);
+			return next;
 		}
 		else{
-			if(parent.rightChild == null){
-				parent.rightChild = new AVLNode<T>(data);
+			if(next.data.compareTo(data) > 0){
+				return addData(data, next, next.leftChild, height+1);
 			}
 			else{
-				addData(data, parent.rightChild);
-			}
-			int lh = parent.leftChild != null ? parent.leftChild.h : 0;
-			int rh = parent.rightChild != null ? parent.rightChild.h : 0;
-			parent.rightHeight = Math.max(lh, rh);
-			parent.h = Math.max(parent.leftHeight, parent.rightHeight);
-		}
-	}
-	@Deprecated
-	public void addData(T data, String s){
-		if(data == null){
-			return;
-		}
-		if(root == null){
-			root = new AVLNode<T>(data);
-			return;
-		}
-		AVLNode<T> current = root;
-		AVLNode<T> previous = null;
-		Stack<AVLNode<T>> stack = new Stack<>();
-		while(current != null){
-			if(current.data.compareTo(data) > 0){
-				previous = current;
-				previous.leftHeight++;
-				current = current.leftChild;
-			}
-			else{
-				previous = current;
-				previous.rightHeight++;
-				current = current.rightChild;
+				return addData(data, next, next.rightChild, height+1);
 			}
 		}
-		current = new AVLNode<T>(data, previous);
-		if(previous.data.compareTo(data) > 0){
-			previous.leftChild = current;
+/*		int lh = 0, rh = 0;
+		if(next.leftChild != null){
+			lh = next.leftChild.h;
+			next.leftHeight = lh;
 		}
-		else{
-			previous.rightChild = current;
+		if(next.rightChild != null){
+			rh = next.rightChild.h;
+			next.rightHeight = rh;
 		}
-		root.countFR();
-		AVLDef(current);
-		root.countHeightForAll(0);
-	}
-	
+		next.h = Math.max(next.leftHeight, next.rightHeight);*/
+	}	
 	public void AVLDef(AVLNode<T> current) {
 		while(current.parent != null){
 			if(current.parent != null && current.FR == 1 && current.parent.FR == 2){
