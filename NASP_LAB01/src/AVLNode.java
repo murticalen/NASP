@@ -1,38 +1,39 @@
 public class AVLNode<T extends Comparable<T>>{
 	public T data;
 	public int FR;
-	public int height;
 	public int leftHeight;
 	public int rightHeight;
+	public int h;
 	public AVLNode<T> leftChild;
 	public AVLNode<T> rightChild;
 	public AVLNode<T> parent;
 	
-	public AVLNode(T data, int height) {
+	public AVLNode(T data) {
 		this.data = data;
 		this.leftHeight = 0;
 		this.rightHeight = 0;
 		this.countFR();
 	}
-	public AVLNode(T data, int height, AVLNode<T> parent){
+	public AVLNode(T data, AVLNode<T> parent){
 		this.data = data;
 		this.parent = parent;
-		this.height = height;
+		this.leftHeight = 0;
+		this.rightHeight = 0;
 		this.countFR();
 	}
-	public AVLNode(T data, int height, AVLNode<T> leftChild, AVLNode<T> rightChild,
+/*	public AVLNode(T data, int height, AVLNode<T> leftChild, AVLNode<T> rightChild,
 			AVLNode<T> parent) {
 		this.data = data;
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
 		this.parent = parent;
 		this.countFR();
-	}	
+	}*/	
 	public void recuriveString(int maxHeight){
 		if(leftChild != null){
 			leftChild.recuriveString(maxHeight);
 		}
-		int level = height;
+		int level = h;
 		if(level == 1){
 			System.out.print("R#");
 		}
@@ -43,7 +44,7 @@ public class AVLNode<T extends Comparable<T>>{
 			level++;
 			System.out.print("======");
 		}
-		System.out.println(" "+data);
+		System.out.println(" "+data+" L:"+leftHeight+" R:"+rightHeight);
 		if(rightChild != null){
 			rightChild.recuriveString(maxHeight);
 		}
@@ -60,7 +61,7 @@ public class AVLNode<T extends Comparable<T>>{
 		return max + 1;
 	}
 	public void countHeightForAll(int height){
-		this.height = height;
+		this.h = height;
 		if(this.leftChild != null){
 			this.leftChild.countHeightForAll(height+1);
 		}
@@ -103,7 +104,7 @@ public class AVLNode<T extends Comparable<T>>{
 		parent.parent = this;
 	}
 	public void countFR(){
-		int leftHeight = 0, rightHeight = 0;
+		/*int leftHeight = 0, rightHeight = 0;
 		if(leftChild != null){
 			leftChild.countFR();
 			leftHeight = leftChild.height;
@@ -118,6 +119,6 @@ public class AVLNode<T extends Comparable<T>>{
 		else{
 			rightHeight = height;
 		}
-		this.FR = leftHeight - rightHeight;
+		this.FR = leftHeight - rightHeight;*/
 	}
 }

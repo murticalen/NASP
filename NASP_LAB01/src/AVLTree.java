@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 
 /**
  * @author Murta
@@ -37,22 +38,68 @@ public class AVLTree<T extends Comparable<T>> {
 			return;
 		}
 		if(root == null){
-			root = new AVLNode<T>(data, 1);
+			root = new AVLNode<T>(data);
+			return;
+		}
+		if(root.data.compareTo(data) <= 0){
+			addData(data, root);
+		}
+		else{
+			addData(data, root);
+		}
+		
+	}
+	private void addData(T data, AVLNode<T> parent){
+		if(parent.data.compareTo(data) <= 0){
+			if(parent.leftChild == null){
+				parent.leftChild = new AVLNode<T>(data);
+			}
+			else{
+				addData(data, parent.leftChild);
+			}
+			int lh = parent.leftChild != null ? parent.leftChild.h : 0;
+			int rh = parent.rightChild != null ? parent.rightChild.h : 0;
+			parent.leftHeight = Math.max(lh, rh);
+			parent.h = Math.max(parent.leftHeight, parent.rightHeight);
+		}
+		else{
+			if(parent.rightChild == null){
+				parent.rightChild = new AVLNode<T>(data);
+			}
+			else{
+				addData(data, parent.rightChild);
+			}
+			int lh = parent.leftChild != null ? parent.leftChild.h : 0;
+			int rh = parent.rightChild != null ? parent.rightChild.h : 0;
+			parent.rightHeight = Math.max(lh, rh);
+			parent.h = Math.max(parent.leftHeight, parent.rightHeight);
+		}
+	}
+	@Deprecated
+	public void addData(T data, String s){
+		if(data == null){
+			return;
+		}
+		if(root == null){
+			root = new AVLNode<T>(data);
 			return;
 		}
 		AVLNode<T> current = root;
 		AVLNode<T> previous = null;
+		Stack<AVLNode<T>> stack = new Stack<>();
 		while(current != null){
 			if(current.data.compareTo(data) > 0){
 				previous = current;
+				previous.leftHeight++;
 				current = current.leftChild;
 			}
 			else{
 				previous = current;
+				previous.rightHeight++;
 				current = current.rightChild;
 			}
 		}
-		current = new AVLNode<T>(data, previous.height + 1, previous);
+		current = new AVLNode<T>(data, previous);
 		if(previous.data.compareTo(data) > 0){
 			previous.leftChild = current;
 		}
