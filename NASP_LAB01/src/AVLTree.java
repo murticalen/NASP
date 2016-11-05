@@ -3,7 +3,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Murta
@@ -13,11 +14,11 @@ public class AVLTree<T extends Comparable<T>> {
 	
 	
 	public AVLNode<T> root;
+	public Set<T> set = new HashSet<T>();
 	
 	public static void readFromFileAndCreateTree(
 			AVLTree<Integer> tree, String string) throws IOException {
 		File file = new File(System.getProperty("user.dir")+"\\"+string+".txt");
-		System.out.println(file);
 		BufferedReader reader = new BufferedReader
 				(new InputStreamReader(new FileInputStream(file)));
 		String line;
@@ -37,23 +38,30 @@ public class AVLTree<T extends Comparable<T>> {
 		if(data == null){
 			return;
 		}
+		if(set.contains(data)){
+			duplicate(data);
+			return;
+		}
+		set.add(data);
 		if(root == null){
-			root = new AVLNode<T>(data, 1);
-			root.h = 1;
+			root = new AVLNode<T>(data);
+			this.print();
 			return;
 		}
 		AVLNode<T> added;
 		if(root.data.compareTo(data) > 0){
-			added = addData(data, root, root.leftChild, 1);
+			added = addData(data, root, root.leftChild);
 		}
 		else{
-			added = addData(data, root, root.rightChild, 1);
+			added = addData(data, root, root.rightChild);
 		}
+		assignHeight(added);
 		AVLDef(added);
+		this.print();
 	}
-	private AVLNode<T> addData(T data, AVLNode<T> parent, AVLNode<T> next, int height){
+	private AVLNode<T> addData(T data, AVLNode<T> parent, AVLNode<T> next){
 		if(next == null){
-			next = new AVLNode<T>(data, height);
+			next = new AVLNode<T>(data, parent);
 			if(parent.data.compareTo(data) > 0){
 				parent.leftChild = next;
 			}
@@ -64,46 +72,76 @@ public class AVLTree<T extends Comparable<T>> {
 		}
 		else{
 			if(next.data.compareTo(data) > 0){
-				return addData(data, next, next.leftChild, height+1);
+				return addData(data, next, next.leftChild);
 			}
 			else{
-				return addData(data, next, next.rightChild, height+1);
+				return addData(data, next, next.rightChild);
 			}
 		}
-/*		int lh = 0, rh = 0;
-		if(next.leftChild != null){
-			lh = next.leftChild.h;
-			next.leftHeight = lh;
-		}
-		if(next.rightChild != null){
-			rh = next.rightChild.h;
-			next.rightHeight = rh;
-		}
-		next.h = Math.max(next.leftHeight, next.rightHeight);*/
-	}	
-	public void AVLDef(AVLNode<T> current) {
+	}
+	public void assignHeight(AVLNode<T> current){
 		while(current.parent != null){
-			if(current.parent != null && current.FR == 1 && current.parent.FR == 2){
-				current.rightRotation(current.parent, root);
+			if(current.parent.leftChild == current){
+				current.parent.leftHeight = current.h() +1;
+				if(AVLDef(current)) break;
+				if(current.parent == null) break;
 			}
-			if(current.parent != null && current.FR == -1 && current.parent.FR == -2){
-				current.leftRotation(current.parent, root);
-			}
-			if(current.parent != null && current.FR == -1 && current.parent.FR == 2){
-				
-			}
-			if(current.parent != null && current.FR == 1 && current.parent.FR == -2){
-				return;
+			else if(current.parent.rightChild == current){
+				current.parent.rightHeight = current.h() +1;
+				if(AVLDef(current)) break;
+				if(current.parent == null) break;
 			}
 			current = current.parent;
 		}
 	}
+	public boolean AVLDef(AVLNode<T> current) {
+		if(current.parent != null && current.FR() == 1 && current.parent.FR() == 2){
+			AVLNode<T> temp = current.parent;
+			current.leftRotation(temp, root);
+			temp.resetHeights();
+			current.resetHeights();
+			return true;
+		}
+		if(current.parent != null && current.FR() == -1 && current.parent.FR() == -2){
+			AVLNode<T> temp = current.parent;
+			current.rightRotation(temp, root);
+			temp.resetHeights();
+			current.resetHeights();
+			return true;
+		}
+		if(current.parent != null && current.FR() == -1 && current.parent.FR() == 2){
+			AVLNode<T> parent = current.parent;
+			AVLNode<T> leftC = current.leftChild;
+			leftC.rightRotation(current, root);
+			leftC.leftRotation(parent, root);
+            current.resetHeights();
+            parent.resetHeights();
+            leftC.resetHeights();
+            return true;
+		}
+		if(current.parent != null && current.FR() == 1 && current.parent.FR() == -2){
+			AVLNode<T> parent = current.parent;
+			AVLNode<T> rightC = current.rightChild;
+			rightC.leftRotation(current, root);
+			rightC.rightRotation(parent, root);
+            current.resetHeights();
+            parent.resetHeights();
+            rightC.resetHeights();
+            return true;
+		}
+		return false;
+	}
 	
 	public void print(){
+		System.out.println("##################################################");
 		if(root != null){
-			root.countHeightForAll(1);
 			root.recuriveString(root.maxHeight());
 		}
+	}
+	
+	public void duplicate(T data){
+		System.out.println("##################################################");
+		System.out.println("Duplicate value "+data+" was ignored from insertion.");
 	}
 
 	public static void main(String[] args) throws Exception{
@@ -114,39 +152,18 @@ public class AVLTree<T extends Comparable<T>> {
 			System.exit(-1);
 		}
 		readFromFileAndCreateTree(tree, args[0]);
-		tree.print();
-		//tree.addData("Error");
-		//tree.addData("ERROR");
-		//tree.addData("Not good");
-		//tree.addData("Fail");
-		
-		/*tree.addData("A");
-		tree.addData("QQ");
-		tree.addData("PP");
-		tree.addData("P");
-		tree.addData("Q");
-		tree.addData("R");
-		tree.print();
-		tree.root.rightChild.leftChild.rightRotation(tree.root.rightChild);*/
-		System.out.println("####################################"
-				+ "Novi ispis stabla, nakon dodavanja"
-				+ "####################################");
-		tree.print();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		tree.root.printBinaryTree(0);
 		while(true){
 			System.out.println("Unesite jedan broj za unos u stablo");
 			String line = reader.readLine();
 			try{
 				tree.addData(Integer.parseInt(line));
-				System.out.println("####################################"
-						+ "Novi ispis stabla, nakon dodavanja"
-						+ "####################################");
-				tree.print();
+				tree.root.printBinaryTree(0);
 			}
 			catch(Exception e){
 				System.err.println(e.getStackTrace());
 			}
 		}
 	}
-
 }
