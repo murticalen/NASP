@@ -77,7 +77,7 @@ public class AVLNode<T extends Comparable<T>>{
 			if(parent.parent.rightChild == parent){
 				parent.parent.rightChild = this;
 			}
-			else if(parent.parent.leftChild == this){
+			else if(parent.parent.leftChild == parent){
 				parent.parent.leftChild = this;
 			}
 		}

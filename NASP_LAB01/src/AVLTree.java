@@ -45,7 +45,7 @@ public class AVLTree<T extends Comparable<T>> {
 		set.add(data);
 		if(root == null){
 			root = new AVLNode<T>(data);
-			this.print();
+			//this.print();
 			return;
 		}
 		AVLNode<T> added;
@@ -57,7 +57,7 @@ public class AVLTree<T extends Comparable<T>> {
 		}
 		assignHeight(added);
 		AVLDef(added);
-		this.print();
+		//this.print();
 	}
 	private AVLNode<T> addData(T data, AVLNode<T> parent, AVLNode<T> next){
 		if(next == null){
@@ -146,19 +146,20 @@ public class AVLTree<T extends Comparable<T>> {
 
 	public static void main(String[] args) throws Exception{
 		AVLTree<Integer> tree = new AVLTree<Integer>();
-		if(args.length != 1){
+		/*if(args.length != 1){
 			System.out.println("The number of arguments must be exactly 1,"
 					+ " name of the file to read from, without txt extension");
 			System.exit(-1);
 		}
 		readFromFileAndCreateTree(tree, args[0]);
+		tree.root.printBinaryTree(0);*/
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		tree.root.printBinaryTree(0);
 		while(true){
 			System.out.println("Unesite jedan broj za unos u stablo");
 			String line = reader.readLine();
 			try{
 				tree.addData(Integer.parseInt(line));
+				//tree.print();
 				tree.root.printBinaryTree(0);
 			}
 			catch(Exception e){
