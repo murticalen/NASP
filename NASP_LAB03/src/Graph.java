@@ -27,7 +27,7 @@ public class Graph {
 		BufferedReader reader = new BufferedReader
 				(new InputStreamReader(new FileInputStream(file)));
 		String line = reader.readLine();
-		int k = 1;
+		int k = 0;
 		for(String s : line.split(" ")){
 			nodes.put(k, s);
 			reverseNodes.put(s, k);
