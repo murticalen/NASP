@@ -1,0 +1,25 @@
+Boston Toronto NY Houston Miami Mexico_City London Lisbon Madrid Paris Frankfurt Tunis Rome Vienna Zagreb Doha Oslo Moscow Berlin Santiago Buenos_Aries Rio Havanna Cape_Town
+Boston Toronto,1 NY,1 London,5 Miami,3
+Toronto Boston,1 NY,1 Houston,3 Mexico_City,5 London,7 Miami,3
+NY Miami,2 Houston,2 Toronto,1 Boston,1 Paris,7 London,6 Frankfurt,7
+Houston Mexico_City,1 NY,2 Toronto,3
+Miami Mexico_City,1 Lisbon,5 Toronto,3 NY,2 Boston,3 Rio,3
+Mexico_City Houston,1 Toronto,5 Miami,1 Lisbon,6 Madrid,8 Rio,4 Buenos_Aries,5 Santiago,4
+London Toronto,7 Boston,5 NY,6 Madrid,2 Paris,1 Berlin,1 Oslo,1 Doha,3
+Lisbon Mexico_City,6 Miami,5 Madrid,1 Vienna,2
+Madrid Lisbon,1 London,2 Paris,1 Rome,1 Mexico_City,8 Rio,8
+Paris London,1 NY,7 Madrid,1 Frankfurt,1 Moscow,4 Berlin,1 Rome,1
+Frankfurt Paris,1 NY,7 Rome,1 Vienna,1 Moscow,3 Berlin,1
+Tunis Rome,1 Doha,2 Cape_Town,8
+Rome Paris,1 Frankfurt,1 Zagreb,1 Doha,3 Tunis,1 Madrid,1
+Vienna Frankfurt,1 Zagreb,1 Moscow,1 Lisbon,2
+Zagreb Vienna,1 Rome,1 Doha,2
+Doha Zagreb,2 Rome,3 Tunis,2 Moscow,2 Berlin,3 London,3 Cape_Town,9
+Oslo London,1 Berlin,1
+Moscow Berlin,2 Paris,4 Frankfurt,3 Vienna,2 Doha,2
+Berlin Oslo,1 London,1 Paris,1 Moscow,2 Frankfurt,1 Doha,3
+Santiago Mexico_City,4 Rio,3 Buenos_Aries,2
+Buenos_Aries Rio,1 Mexico_City,5 Santiago,2 Cape_Town,6
+Rio Buenos_Aries,1 Santiago,3 Mexico_City,4 Cape_Town,6 Havanna,2 Madrid,8 Miami,3
+Havanna Rio,2
+Cape_Town Rio,6 Buenos_Aries,6 Tunis,8 Doha,9

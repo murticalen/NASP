@@ -1,0 +1,5 @@
+a b c d e f g h i j k l m n
+a b,4 c,3
+b a,4 c,1 d,2
+c a,3 b,1 d,2
+d b,2 c,2
