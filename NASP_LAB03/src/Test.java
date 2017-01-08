@@ -5,7 +5,7 @@ public class Test {
 		ShortestPath d;
 		//d = new Dijkstra(g);
 		d = new WarFloydIng(g);
-		
+
 		System.out.println(g.shortestPathQuery("Cape_Town", "Moscow", d));
 		System.out.println(g.shortestPathQuery("Moscow", "Mexico_City", d));
 		System.out.println(g.shortestPathQuery("Doha", "Toronto", d));

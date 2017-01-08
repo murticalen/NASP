@@ -1,4 +1,4 @@
-Boston Toronto NY Houston Miami Mexico_City London Lisbon Madrid Paris Frankfurt Tunis Rome Vienna Zagreb Doha Oslo Moscow Berlin Santiago Buenos_Aries Rio Havanna Cape_Town
+Berlin Boston Buenos_Aries Cape_Town Doha Frankfurt Havanna Houston Lisbon London Madrid Mexico_City Miami Moscow NY Oslo Paris Rio Rome Santiago Toronto Tunis Vienna Zagreb
 Boston Toronto,1 NY,1 London,5 Miami,3
 Toronto Boston,1 NY,1 Houston,3 Mexico_City,5 London,7 Miami,3
 NY Miami,2 Houston,2 Toronto,1 Boston,1 Paris,7 London,6 Frankfurt,7
