@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -9,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.sun.org.apache.xml.internal.security.Init;
 /**
  * 
  * @author Murta
@@ -38,7 +35,7 @@ public class Graph {
 			List<Entry<Integer, Integer>> list = new LinkedList<>();
 			for(int i = 1; i < node.length; i++){
 				String[] n = node[i].split(",");
-				list.add(new AbstractMap.SimpleEntry(this.reverseNodes.get(n[0]), Integer.parseInt(n[1])));
+				list.add(new AbstractMap.SimpleEntry<Integer, Integer>(this.reverseNodes.get(n[0]), Integer.parseInt(n[1])));
 			}
 			succ.put(this.reverseNodes.get(node[0]), list);
 		}

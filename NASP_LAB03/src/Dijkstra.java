@@ -35,6 +35,11 @@ public class Dijkstra implements ShortestPath{
 
 	@Override
 	public Path findShortestPath(Integer begin, Integer end) {
+		if(begin.equals(end)){
+			List<String> list = new LinkedList<>();
+			list.add(g.nodes.get(begin));
+			return new Path(list, 0);
+		}
 		q = new PriorityQueue<>();
 		done = new HashSet<>();
 		addSuccs(new DijkstraNode(begin, null, 0));
