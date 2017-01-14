@@ -61,6 +61,10 @@ public class WarFloydIng implements ShortestPath {
 			return null;
 		}
 		int node = end;
+		if(begin == end){
+			list.add(0, g.nodes.get(node));
+			return new Path(list, D[begin][end]);
+		}
 		while(true){
 			list.add(0, g.nodes.get(node));
 			node = Path[begin][node];
